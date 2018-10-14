@@ -11,7 +11,6 @@ public abstract class Singleton<T> : MonoBehaviour
         get { return _instance; }
     }
 
-
     //protected 可以被继承
     //virtual       可以被复写
     protected virtual void Awake()

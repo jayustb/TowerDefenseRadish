@@ -8,7 +8,6 @@ public class ObjectPool : Singleton<ObjectPool>
 
     Dictionary<string, SubPool> m_pools = new Dictionary<string, SubPool>();
 
-
     //取池子对象
     public GameObject Spawn(string name)
     {
@@ -25,7 +24,6 @@ public class ObjectPool : Singleton<ObjectPool>
 
         return pool.Spawn();
     }
-
 
     //回收
     public void Unspawn(GameObject go)
@@ -45,7 +43,6 @@ public class ObjectPool : Singleton<ObjectPool>
 
         pool.Unspawn(go);
     }
-
 
     //回收所有对象
     public void SpawnAll()

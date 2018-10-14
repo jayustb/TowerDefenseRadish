@@ -33,7 +33,6 @@ public class Sound : Singleton<Sound>
     }
 
     //音效音量大小
-
     public float EfxVolume
     {
         get { return _efxSound.volume; }
