@@ -1,7 +1,9 @@
+using System.Collections;
 using System.Collections.Generic;
 using System.IO;
 using System.Text;
 using System.Xml;
+using UnityEngine;
 
 //类功能 : 变现命令为XML的类
 public class Tool
@@ -10,7 +12,7 @@ public class Tool
     public static List<FileInfo> GetLevelFiles()
     {
         // 从访问Const.CS开始
-        string[] files = Directory.GetFiles(Const.LevelDir, "*.xml");
+        string[] files = Directory.GetFiles(Const.ConDir_Level, "*.xml");
 
         List<FileInfo> list = new List<FileInfo>();
         for (int i = 0; i < files.Length; i++)
@@ -36,8 +38,8 @@ public class Tool
         level.Road = doc.SelectSingleNode(@"\Level\Road")?.InnerText;
         level.InitScore = int.Parse(doc.SelectSingleNode(@"\Level\InitScore")?.InnerText);
 
-        //todo:搞懂这里是不是有错
-        XmlNodeList nodes = doc.SelectSingleNode(@"\Level\Holder\Point").ChildNodes;
+        XmlNodeList nodes;
+        nodes = doc.SelectNodes("/Level/Holder/Point");
 
         for (int i = 0; i < nodes.Count; i++)
         {
@@ -45,5 +47,98 @@ public class Tool
             Point p = new Point(int.Parse(node.Attributes["X"].Value), int.Parse(node.Attributes["Y"].Value));
             level.Holder.Add(p);
         }
+
+
+        nodes = doc.SelectNodes("/Level/Path/Point");
+        for (int i = 0; i < nodes.Count; i++)
+        {
+            XmlNode node = nodes[i];
+
+            Point p = new Point(
+                int.Parse(node.Attributes["X"].Value),
+                int.Parse(node.Attributes["Y"].Value));
+
+            level.Paths.Add(p);
+        }
+
+        nodes = doc.SelectNodes("/Level/Rounds/Round");
+        for (int i = 0; i < nodes.Count; i++)
+        {
+            XmlNode node = nodes[i];
+
+            Round r = new Round(
+                int.Parse(node.Attributes["Monster"].Value),
+                int.Parse(node.Attributes["Count"].Value)
+            );
+
+            level.Rounds.Add(r);
+        }
+
+        sr.Close();
+        sr.Dispose();
+    }
+
+    //3. 保存关卡
+    public static void SaveLevel(string fileName, Level level)
+    {
+        StringBuilder sb = new StringBuilder();
+        sb.AppendLine("<?xml version=\"1.0\" encoding=\"utf-8\"?>");
+        sb.AppendLine("<Level>");
+
+        sb.AppendLine(string.Format("<Name>{0}</Name>", level.Name));
+        sb.AppendLine(string.Format("<Background>{0}</Background>", level.BackGround));
+        sb.AppendLine(string.Format("<Road>{0}</Road>", level.Road));
+        sb.AppendLine(string.Format("<InitScore>{0}</InitScore>", level.InitScore));
+
+        sb.AppendLine("<Holder>");
+        for (int i = 0; i < level.Holder.Count; i++)
+        {
+            sb.AppendLine(string.Format("<Point X=\"{0}\" Y=\"{1}\"/>", level.Holder[i].X, level.Holder[i].Y));
+        }
+
+        sb.AppendLine("</Holder>");
+
+        sb.AppendLine("<Path>");
+        for (int i = 0; i < level.Paths.Count; i++)
+        {
+            sb.AppendLine(string.Format("<Point X=\"{0}\" Y=\"{1}\"/>", level.Paths[i].X, level.Paths[i].Y));
+        }
+
+        sb.AppendLine("</Path>");
+
+        sb.AppendLine("<Rounds>");
+        for (int i = 0; i < level.Rounds.Count; i++)
+        {
+            sb.AppendLine(string.Format("<Round Monster=\"{0}\" Count=\"{1}\"/>", level.Rounds[i].Monster,
+                level.Rounds[i].Count));
+        }
+
+        sb.AppendLine("</Rounds>");
+
+        sb.AppendLine("</Level>");
+
+        string content = sb.ToString();
+
+        StreamWriter sw = new StreamWriter(fileName, false, Encoding.UTF8);
+        sw.Write(content);
+        sw.Flush();
+        sw.Dispose();
+    }
+
+    //4. 加载图片
+    public static IEnumerator LoadImage(string url, SpriteRenderer render)
+    {
+        WWW www = new WWW(url);
+
+        while (!www.isDone)
+            yield return www;
+
+        Texture2D texture = www.texture;
+        Sprite sp = Sprite.Create(
+            texture,
+            new Rect(0, 0, texture.width, texture.height),
+            new Vector2(0.5f, 0.5f)
+        );
+        render.sprite = sp;
     }
 }
