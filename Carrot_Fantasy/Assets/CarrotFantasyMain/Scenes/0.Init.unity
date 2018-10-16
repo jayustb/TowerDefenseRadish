@@ -306,16 +306,6 @@ MonoBehaviour:
   Hash2: []
   Hash3:
   - list:
-    - {fileID: 1140682683}
-    ActiveGameObject: {fileID: 1140682683}
-    GUIDsList: []
-    GUIDsActiveGameObject: 
-    PATHsList: []
-    PATHsActiveGameObject: 
-    InstanceID: 0
-    wasInit: 0
-    CashedBool: 0
-  - list:
     - {fileID: 1877750722}
     ActiveGameObject: {fileID: 1877750722}
     GUIDsList: []
@@ -336,6 +326,26 @@ MonoBehaviour:
     wasInit: 0
     CashedBool: 0
   - list:
+    - {fileID: 1140682683}
+    ActiveGameObject: {fileID: 1140682683}
+    GUIDsList: []
+    GUIDsActiveGameObject: 
+    PATHsList: []
+    PATHsActiveGameObject: 
+    InstanceID: 0
+    wasInit: 0
+    CashedBool: 0
+  - list:
+    - {fileID: 763948556}
+    ActiveGameObject: {fileID: 763948556}
+    GUIDsList: []
+    GUIDsActiveGameObject: 
+    PATHsList: []
+    PATHsActiveGameObject: 
+    InstanceID: 0
+    wasInit: 0
+    CashedBool: 0
+  - list:
     - {fileID: 1403981366}
     ActiveGameObject: {fileID: 1403981366}
     GUIDsList: []
@@ -348,16 +358,6 @@ MonoBehaviour:
   - list:
     - {fileID: 1761503105}
     ActiveGameObject: {fileID: 1761503105}
-    GUIDsList: []
-    GUIDsActiveGameObject: 
-    PATHsList: []
-    PATHsActiveGameObject: 
-    InstanceID: 0
-    wasInit: 0
-    CashedBool: 0
-  - list:
-    - {fileID: 763948556}
-    ActiveGameObject: {fileID: 763948556}
     GUIDsList: []
     GUIDsActiveGameObject: 
     PATHsList: []

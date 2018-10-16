@@ -344,9 +344,18 @@ public class Map : MonoBehaviour
     //获取鼠标所在位置的世界坐标
     Vector3 GetWorldPosition()
     {
+        Vector3 worldPos = new Vector3(0, 0, 0);
         //todo:可以一步到位,尝试新的api???                                                                
-        var viewPos = Camera.main.ScreenToViewportPoint(Input.mousePosition);
-        var worldPos = Camera.main.ViewportToWorldPoint(viewPos);
+        if (Camera.main != null)
+        {
+            var viewPos = Camera.main.ScreenToViewportPoint(Input.mousePosition);
+            worldPos = Camera.main.ViewportToWorldPoint(viewPos);
+        }
+        else
+        {
+            Debug.LogError("Camera.Main Lost!!!");
+        }
+
         return worldPos;
     }
 
