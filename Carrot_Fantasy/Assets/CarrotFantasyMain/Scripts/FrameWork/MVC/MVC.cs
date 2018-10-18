@@ -10,6 +10,7 @@ namespace CarrotFantasyMain.Scripts.FrameWork.MVC
     {
         //1. 存储MVC
 
+
         //名字     -> 模型
         public static Dictionary<string, Model> Models = new Dictionary<string, Model>();
 

@@ -7,7 +7,7 @@ public class Level
     public string Name;
 
     //背景
-    public string BackGround;
+    public string Background;
 
     //路径
     public string Road;
@@ -23,6 +23,13 @@ public class Level
 
     //出怪回合信息
     public List<Round> Rounds;
+
+    public Level()
+    {
+        Holder = new List<Point>();
+        Paths = new List<Point>();
+        Rounds = new List<Round>();
+    }
 }
 
 //回合的定义类

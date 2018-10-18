@@ -1,3 +1,4 @@
+using System;
 using System.Collections;
 using System.Collections.Generic;
 using System.IO;
@@ -33,10 +34,12 @@ public class Tool
         XmlDocument doc = new XmlDocument();
         doc.Load(sr);
 
-        level.Name = doc.SelectSingleNode(@"\Level\Name")?.InnerText;
-        level.BackGround = doc.SelectSingleNode(@"\Level\BackGround")?.InnerText;
-        level.Road = doc.SelectSingleNode(@"\Level\Road")?.InnerText;
-        level.InitScore = int.Parse(doc.SelectSingleNode(@"\Level\InitScore")?.InnerText);
+
+        level.Name = doc.SelectSingleNode("/Level/Name").InnerText;
+        level.Background = doc.SelectSingleNode("/Level/Background").InnerText;
+        level.Road = doc.SelectSingleNode("/Level/Road").InnerText;
+        level.InitScore = int.Parse(doc.SelectSingleNode("/Level/InitScore").InnerText);
+
 
         XmlNodeList nodes;
         nodes = doc.SelectNodes("/Level/Holder/Point");
@@ -86,7 +89,7 @@ public class Tool
         sb.AppendLine("<Level>");
 
         sb.AppendLine(string.Format("<Name>{0}</Name>", level.Name));
-        sb.AppendLine(string.Format("<Background>{0}</Background>", level.BackGround));
+        sb.AppendLine(string.Format("<Background>{0}</Background>", level.Background));
         sb.AppendLine(string.Format("<Road>{0}</Road>", level.Road));
         sb.AppendLine(string.Format("<InitScore>{0}</InitScore>", level.InitScore));
 

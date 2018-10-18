@@ -95,8 +95,7 @@ public class Map : MonoBehaviour
 
 #region 方法
 
-    //Step: 0 总方法
-    //加载场景总方法
+    //Step: 0 加载场景总方法
     public void LoadLevel(Level level)
     {
         //清除当前状态
@@ -106,7 +105,7 @@ public class Map : MonoBehaviour
         this._level = level;
 
         //加载图片
-        this.BackgroundImage = "file://" + Const.ConDir_Map + "/" + level.BackGround;
+        this.BackgroundImage = "file://" + Const.ConDir_Map + "/" + level.Background;
         this.RoadImage = "file://" + Const.ConDir_Map + "/" + level.Road;
 
         //加载寻路点
@@ -126,8 +125,7 @@ public class Map : MonoBehaviour
         }
     }
 
-    //Step: 1 
-    //清除所有信息
+    //Step: 1 清除所有信息 
     public void Clear()
     {
         _level = null;
@@ -135,8 +133,7 @@ public class Map : MonoBehaviour
         ClearRoad();
     }
 
-    //Step: 1.1 
-    //清除塔位信息
+    //Step: 1.1 清除塔位信息
     public void ClearHolder()
     {
         foreach (Tile t in _grid)
@@ -146,8 +143,7 @@ public class Map : MonoBehaviour
         }
     }
 
-    //Step: 1.2
-    //清除寻路格子集合
+    //Step: 1.2 清除寻路格子集合
     public void ClearRoad()
     {
         _road.Clear();
