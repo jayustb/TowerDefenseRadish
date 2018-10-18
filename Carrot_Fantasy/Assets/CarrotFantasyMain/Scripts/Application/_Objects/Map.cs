@@ -1,6 +1,21 @@
-﻿using System.Collections.Generic;
-using UnityEditor;
+﻿using System;
+using System.Collections.Generic;
 using UnityEngine;
+
+/*
+ * 地图编辑的约定:
+ * 1. 鼠标左键创建或者取消寻路点
+ * 2. 鼠标右键创建或者取消放塔点
+ */
+
+/*
+ * 编辑器在哪个脚本里写:
+ * MapEditor只能在Scene下起作用
+ * 我们的编辑需求只能在那个Game下操作
+ * 所以写在MapEditor里面是没有用的
+ * 只能写在Map里面
+ */
+
 
 /// <summary>
 /// 用于描述一个关卡地图的状态
@@ -89,7 +104,12 @@ public class Map : MonoBehaviour
 
 #endregion
 
+    //todo:这里需要去补充C#的基础知识
+    //事件是委托的实例
+
 #region 事件
+
+    public event EventHandler<TileClickEventArgs> OnTileClick;
 
 #endregion
 
@@ -151,19 +171,11 @@ public class Map : MonoBehaviour
 
 #endregion
 
-#region Unity回调
-
-    private Camera _mainCamera;
+#region Unity回调(UnityEngine的相关函数)
 
     //只在运行期起作用
-    private void Start()
+    private void Awake()
     {
-        //是否要话辅助线
-        DrawGizmos = true;
-
-        //主摄像头赋值
-        _mainCamera = Camera.main;
-
         //计算地图和格子大小
 //        CalculateSize(MainCamera);
         CalculateSize();
@@ -177,6 +189,9 @@ public class Map : MonoBehaviour
                 _grid.Add(new Tile(j, i));
             }
         }
+
+        //监听鼠标点击事件
+        OnTileClick+=   map
     }
 
     //只在编辑器里起作用(由DrawGizmos提供效果)
@@ -243,6 +258,41 @@ public class Map : MonoBehaviour
                 var from = GetPosition(_road[i - 1]);
                 var to = GetPosition(_road[i]);
                 Gizmos.DrawLine(from, to);
+            }
+        }
+    }
+
+    private void Update()
+    {
+        //鼠标左键检测
+        if (Input.GetMouseButtonDown(0))
+        {
+            Tile t = GetTileUnderMouse();
+
+            if (t != null)
+            {
+                //触发鼠标左键点击事件
+                TileClickEventArgs e = new TileClickEventArgs(0, t);
+                if (OnTileClick != null)
+                {
+                    OnTileClick(this, e);
+                }
+            }
+        }
+
+        //鼠标右键检测
+        if (Input.GetMouseButtonDown(1))
+        {
+            Tile t = GetTileUnderMouse();
+
+            if (t != null)
+            {
+                //触发鼠标右键点击事件
+                TileClickEventArgs e = new TileClickEventArgs(1, t);
+                if (OnTileClick != null)
+                {
+                    OnTileClick(this, e);
+                }
             }
         }
     }
@@ -356,4 +406,20 @@ public class Map : MonoBehaviour
     }
 
 #endregion
+}
+
+// 鼠标点击参数类
+public class TileClickEventArgs : EventArgs
+{
+    //鼠标点击状态: 0 左键 1 右键
+    public int MouseButton;
+
+    //当前的方块格子
+    public Tile Tile;
+
+    public TileClickEventArgs(int mouseButton, Tile tile)
+    {
+        this.MouseButton = mouseButton;
+        this.Tile = tile;
+    }
 }
