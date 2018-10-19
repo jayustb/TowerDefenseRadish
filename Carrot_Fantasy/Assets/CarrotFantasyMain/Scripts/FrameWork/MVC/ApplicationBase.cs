@@ -15,7 +15,7 @@ namespace CarrotFantasyMain.Scripts.FrameWork.MVC
         }
 
         //执行控制器
-        protected void SendEvent(string eventName)
+        protected void SendEvent(string eventName, object args = null)
         {
             MVC.SendEvent(eventName);
         }

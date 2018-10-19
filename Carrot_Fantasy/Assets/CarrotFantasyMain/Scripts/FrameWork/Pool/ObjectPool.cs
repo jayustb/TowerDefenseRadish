@@ -4,7 +4,7 @@ using UnityEngine;
 public class ObjectPool : Singleton<ObjectPool>
 {
     //资源路径:相对于Resources
-    public readonly string RelaDirOfResources = null;
+    public string RelaDirOfResources = null;
 
     Dictionary<string, SubPool> m_pools = new Dictionary<string, SubPool>();
 

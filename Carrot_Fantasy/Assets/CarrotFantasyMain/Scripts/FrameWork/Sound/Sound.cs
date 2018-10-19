@@ -20,7 +20,7 @@ public class Sound : Singleton<Sound>
 #endregion
 
     //资源路径:相对于Resources
-    public readonly string RelaDirOfResources = null;
+    public string RelaDirOfResources = null;
 
     private AudioSource _bgSound; //BGM音源
     private AudioSource _efxSound; //EFX音源

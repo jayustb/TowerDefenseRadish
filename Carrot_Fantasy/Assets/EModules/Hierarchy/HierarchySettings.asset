@@ -18,6 +18,11 @@ MonoBehaviour:
     path: Assets/CarrotFantasyMain/Scenes/0.Init.unity
     additional_guid: []
     additional_path: []
+  - guid: 645259629cfd54cb48932428d18793a4
+    pin: 0
+    path: Assets/CarrotFantasyMain/Scenes/1.Start.unity
+    additional_guid: []
+    additional_path: []
   - guid: 41d2d258c544545ebbc133659f91fd43
     pin: 0
     path: Assets/CarrotFantasyMain/Scenes/4.Complete.unity
