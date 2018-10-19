@@ -16,6 +16,11 @@ public class MapEditor : Editor
     //正在编辑的关卡索引
     private int _selectedIndex = -1;
 
+    ///----------------/////////
+    /// 这里放一些一次性启动的东西
+    private bool isFisrt = false;
+
+    ///----------------/////////
 
     //绘制 Inspector 的主进程
     public override void OnInspectorGUI()

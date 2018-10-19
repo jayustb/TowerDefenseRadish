@@ -7,7 +7,7 @@ EditorBuildSettings:
   m_Scenes:
   - enabled: 1
     path: Assets/CarrotFantasyMain/Scenes/0.Init.unity
-    guid: 3c1e1d386fa824784ab12a7d3150572e
+    guid: 5f7adfd12fe0d4f2e98ae331e160c104
   - enabled: 1
     path: Assets/CarrotFantasyMain/Scenes/1.Start.unity
     guid: 645259629cfd54cb48932428d18793a4

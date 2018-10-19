@@ -13,6 +13,21 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   pluginID: 0
   last_scenesV2:
+  - guid: 5f7adfd12fe0d4f2e98ae331e160c104
+    pin: 0
+    path: Assets/CarrotFantasyMain/Scenes/0.Init.unity
+    additional_guid: []
+    additional_path: []
+  - guid: 41d2d258c544545ebbc133659f91fd43
+    pin: 0
+    path: Assets/CarrotFantasyMain/Scenes/4.Complete.unity
+    additional_guid: []
+    additional_path: []
+  - guid: f9a888837c3454ac2967afdc86640df6
+    pin: 0
+    path: Assets/CarrotFantasyMain/Scenes/LevelBuild.unity
+    additional_guid: []
+    additional_path: []
   - guid: 3c1e1d386fa824784ab12a7d3150572e
     pin: 0
     path: Assets/CarrotFantasyMain/Scenes/0.Init.unity

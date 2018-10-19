@@ -1,11 +1,12 @@
 ﻿using System;
 using System.Collections.Generic;
 using UnityEngine;
+using static UnityEngine.Debug;
 
 /*
  * 地图编辑的约定:
- * 1. 鼠标左键创建或者取消寻路点
- * 2. 鼠标右键创建或者取消放塔点
+ * 1. 鼠标右键创建或者取消寻路点
+ * 2. 鼠标左键创建或者取消放塔点
  */
 
 /*
@@ -107,11 +108,6 @@ public class Map : MonoBehaviour
     //todo:这里需要去补充C#的基础知识
     //事件是委托的实例
 
-#region 事件
-
-    public event EventHandler<TileClickEventArgs> OnTileClick;
-
-#endregion
 
 #region 方法
 
@@ -171,166 +167,7 @@ public class Map : MonoBehaviour
 
 #endregion
 
-#region Unity回调(UnityEngine的相关函数)
-
-    //只在运行期起作用
-    private void Awake()
-    {
-        //计算地图和格子大小
-//        CalculateSize(MainCamera);
-        CalculateSize();
-
-        //创建所有的格子
-        for (var i = 0; i < RowCount; i++)
-        {
-            for (var j = 0; j < ColumnCount; j++)
-            {
-                _road.Add(new Tile(j, i));
-                _grid.Add(new Tile(j, i));
-            }
-        }
-
-        //监听鼠标点击事件
-        OnTileClick+=   map
-    }
-
-    //只在编辑器里起作用(由DrawGizmos提供效果)
-    void OnDrawGizmos()
-    {
-        //根据全局判断是否需要绘制这个GIzmo
-        if (!DrawGizmos)
-            return;
-
-        //计算地图和格子大小
-//        CalculateSize(MainCamera);
-        CalculateSize();
-
-        //绘制格子
-        Gizmos.color = Color.green;
-
-        //绘制行
-        for (var row = 0; row <= RowCount; row++)
-        {
-            var from = new Vector2(-_mapWidth / 2, -_mapHeight / 2 + row * _tileHeight);
-            var to = new Vector2(-_mapWidth / 2 + _mapWidth, -_mapHeight / 2 + row * _tileHeight);
-            Gizmos.DrawLine(from, to);
-        }
-
-        //绘制列
-        for (var col = 0; col <= ColumnCount; col++)
-        {
-            var from = new Vector2(-_mapWidth / 2 + col * _tileWidth, _mapHeight / 2);
-            var to = new Vector2(-_mapWidth / 2 + col * _tileWidth, -_mapHeight / 2);
-            Gizmos.DrawLine(from, to);
-        }
-
-        //加载_Grid 以及 _Grid的贴图
-        foreach (var t in _grid)
-        {
-            if (t.CanHold)
-            {
-                var pos = GetPosition(t);
-                Gizmos.DrawIcon(pos, "holder.png", true);
-            }
-        }
-
-        //设置Gizmo的颜色
-        Gizmos.color = Color.red;
-
-        //路途点的绘制
-        for (var i = 0; i < _road.Count; i++)
-        {
-            //起点
-            if (i == 0)
-            {
-                Gizmos.DrawIcon(GetPosition(_road[i]), "start.png", true);
-            }
-
-            //终点
-            if (_road.Count > 1 && i == _road.Count - 1)
-            {
-                Gizmos.DrawIcon(GetPosition(_road[i]), "end.png", true);
-            }
-
-            //红色的连线
-            if (_road.Count > 1 && i != 0)
-            {
-                var from = GetPosition(_road[i - 1]);
-                var to = GetPosition(_road[i]);
-                Gizmos.DrawLine(from, to);
-            }
-        }
-    }
-
-    private void Update()
-    {
-        //鼠标左键检测
-        if (Input.GetMouseButtonDown(0))
-        {
-            Tile t = GetTileUnderMouse();
-
-            if (t != null)
-            {
-                //触发鼠标左键点击事件
-                TileClickEventArgs e = new TileClickEventArgs(0, t);
-                if (OnTileClick != null)
-                {
-                    OnTileClick(this, e);
-                }
-            }
-        }
-
-        //鼠标右键检测
-        if (Input.GetMouseButtonDown(1))
-        {
-            Tile t = GetTileUnderMouse();
-
-            if (t != null)
-            {
-                //触发鼠标右键点击事件
-                TileClickEventArgs e = new TileClickEventArgs(1, t);
-                if (OnTileClick != null)
-                {
-                    OnTileClick(this, e);
-                }
-            }
-        }
-    }
-
-#endregion
-
-#region 事件回调
-
-#endregion
-
 #region 帮助方法
-
-    //todo:这是DashJay给的方法
-    //计算地图大小，格子大小
-//    private void CalculateSize(Camera MainCamera)
-//    {
-//        //获取摄像头视角
-//        var halfFov = MainCamera.fieldOfView * 0.5f * Mathf.Deg2Rad;
-//        var aspect = MainCamera.aspect;
-//        var height = MainCamera.transform.position.z * Mathf.Tan(halfFov);
-//        var width = height * aspect;
-
-//        var LeftDown = MainCamera.transform.position - MainCamera.transform.right * width;
-//        LeftDown -= MainCamera.transform.up * height;
-//        LeftDown += MainCamera.transform.forward * MainCamera.transform.position.z;
-//
-//        var RightUp = MainCamera.transform.position + MainCamera.transform.right * width;
-//        RightUp += MainCamera.transform.up * height;
-//        RightUp += MainCamera.transform.forward * MainCamera.transform.position.z;
-//
-//计算地图大小，格子大小
-//        _mapWidth = RightUp.x - LeftDown.x;
-//        _mapHeight = RightUp.y - LeftDown.y;
-//
-//        _tileWidth = _mapWidth / ColumnCount;
-//        _tileHeight = _mapHeight / RowCount;
-//    }
-
 
     //todo:这是Kaike的方法
     //计算地图大小，格子大小
@@ -403,6 +240,181 @@ public class Map : MonoBehaviour
         }
 
         return worldPos;
+    }
+
+#endregion
+
+#region Unity回调(UnityEngine的相关函数)
+
+    //只在运行期起作用
+    private void Awake()
+    {
+        //计算地图和格子大小
+//        CalculateSize(MainCamera);
+        CalculateSize();
+
+        //创建所有的格子
+        for (var i = 0; i < RowCount; i++)
+        {
+            for (var j = 0; j < ColumnCount; j++)
+            {
+                _road.Add(new Tile(j, i));
+                _grid.Add(new Tile(j, i));
+            }
+        }
+
+        //监听鼠标点击事件
+        OnTileClick += Map_OnTileClick;
+    }
+
+    //只在编辑器里起作用(由DrawGizmos提供效果)
+    void OnDrawGizmos()
+    {
+        //根据全局判断是否需要绘制这个GIzmo
+        if (!DrawGizmos)
+            return;
+
+        //计算地图和格子大小
+//        CalculateSize(MainCamera);
+        CalculateSize();
+
+        //绘制格子
+        Gizmos.color = Color.green;
+
+        //绘制行
+        for (var row = 0; row <= RowCount; row++)
+        {
+            var from = new Vector2(-_mapWidth / 2, -_mapHeight / 2 + row * _tileHeight);
+            var to = new Vector2(-_mapWidth / 2 + _mapWidth, -_mapHeight / 2 + row * _tileHeight);
+            Gizmos.DrawLine(from, to);
+        }
+
+        //绘制列
+        for (var col = 0; col <= ColumnCount; col++)
+        {
+            var from = new Vector2(-_mapWidth / 2 + col * _tileWidth, _mapHeight / 2);
+            var to = new Vector2(-_mapWidth / 2 + col * _tileWidth, -_mapHeight / 2);
+            Gizmos.DrawLine(from, to);
+        }
+
+        //加载_Grid 以及 _Grid的贴图
+        foreach (var t in _grid)
+        {
+            if (t.CanHold)
+            {
+                var pos = GetPosition(t);
+                Gizmos.DrawIcon(pos, "holder.png", true);
+            }
+        }
+
+        //设置Gizmo的颜色
+        Gizmos.color = Color.red;
+
+        //路途点的绘制
+        for (var i = 0; i < _road.Count; i++)
+        {
+            //起点
+            if (i == 0)
+            {
+                Gizmos.DrawIcon(GetPosition(_road[i]), "start.png", true);
+            }
+
+            //终点
+            if (_road.Count > 1 && i == _road.Count - 1)
+            {
+                Gizmos.DrawIcon(GetPosition(_road[i]), "end.png", true);
+            }
+
+            //红色的连线
+            if (_road.Count > 1 && i != 0)
+            {
+                var from = GetPosition(_road[i - 1]);
+                var to = GetPosition(_road[i]);
+                Gizmos.DrawLine(from, to);
+            }
+        }
+    }
+
+    private void Update()
+    {
+        //鼠标点击事件函数
+        MouseClickEvent();
+    }
+
+#endregion
+
+#region 事件
+
+    //鼠标点击事件
+    public event EventHandler<TileClickEventArgs> OnTileClick;
+
+    //Update中的鼠标点击事件函数体
+    //todo:在这里实现类似编辑器的连拖编辑
+    void MouseClickEvent()
+    {
+        //鼠标左键检测
+        if (Input.GetMouseButtonDown(0))
+//        if (Input.GetMouseButton(0))
+        {
+            Tile t = GetTileUnderMouse();
+
+            if (t != null)
+            {
+                //触发鼠标左键点击事件
+                TileClickEventArgs e = new TileClickEventArgs(0, t);
+                if (OnTileClick != null)
+                {
+                    OnTileClick(this, e);
+                }
+            }
+        }
+
+        //鼠标右键检测
+        if (Input.GetMouseButtonDown(1))
+//        if (Input.GetMouseButton(1))
+        {
+            Tile t = GetTileUnderMouse();
+
+            if (t != null)
+            {
+                //触发鼠标右键点击事件
+                TileClickEventArgs e = new TileClickEventArgs(1, t);
+                if (OnTileClick != null)
+                {
+                    OnTileClick(this, e);
+                }
+            }
+        }
+    }
+
+#endregion
+
+#region 事件回调
+
+    //鼠标点击事件
+    void Map_OnTileClick(object sender, TileClickEventArgs e)
+    {
+        if (Level == null)
+            return;
+
+        //鼠标左键对 <放塔点编辑> 的实现
+        if (e.MouseButton == 0 && !_road.Contains(e.Tile))
+        {
+            e.Tile.CanHold = !e.Tile.CanHold;
+        }
+
+        //鼠标右键对 <路径点编辑> 的实现
+        if (e.MouseButton == 1 && !e.Tile.CanHold)
+        {
+            if (_road.Contains(e.Tile))
+            {
+                _road.Remove(e.Tile);
+            }
+            else
+            {
+                _road.Add(e.Tile);
+            }
+        }
     }
 
 #endregion
