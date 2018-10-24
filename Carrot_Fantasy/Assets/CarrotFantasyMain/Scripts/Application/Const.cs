@@ -6,10 +6,10 @@ public static class Const
 {
     //资源目录
     public static readonly string ConDir_Level
-        = Application.dataPath + @"/CarrotFantasyMain/Res/Levels";
+        = Application.dataPath + @"/CarrotFantasyMain/Res/Levels/";
 
     public static readonly string ConDir_Map
-        = Application.dataPath + @"/CarrotFantasyMain/Res/Maps";
+        = Application.dataPath + @"/CarrotFantasyMain/Res/Maps/";
 
     //存档目录
 
@@ -32,6 +32,7 @@ public static class Const
 
 
     //Controller
+    //
     public const string E_StartUp = "E_StartUp";
 
     public const string E_EnterScene = "E_EnterScene"; //SceneArgs

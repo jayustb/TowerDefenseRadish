@@ -57,8 +57,8 @@ public class Point
 
     public Point(int x, int y)
     {
-        this.X = x;
-        this.Y = y;
+        X = x;
+        Y = y;
     }
 }
 
@@ -72,12 +72,12 @@ public class Tile
 
     public Tile(int x, int y)
     {
-        this.X = x;
-        this.Y = y;
+        X = x;
+        Y = y;
     }
 
     //重写ToString(虽然没什么可重写的)
-    public string ToString()
+    public override string ToString()
     {
         return string.Format("[X:{},Y:{},CanHold:{}]", this.X, this.Y, this.CanHold);
     }

@@ -6,19 +6,19 @@ using System.Collections.Generic;
 //最后有 发送事件 的功能
 namespace CarrotFantasyMain.Scripts.FrameWork.MVC
 {
-    public static class MVC
+    public static class Mvc
     {
         //1. 存储MVC
 
 
         //名字     -> 模型
-        public static Dictionary<string, Model> Models = new Dictionary<string, Model>();
+        private static Dictionary<string, Model> Models = new Dictionary<string, Model>();
 
         //名字     -> 视图
-        public static Dictionary<string, View> Views = new Dictionary<string, View>();
+        private static Dictionary<string, View> Views = new Dictionary<string, View>();
 
-        //事件名 -> 控制器类型
-        public static Dictionary<string, Type> CommandMap = new Dictionary<string, Type>();
+        //事件名   -> 控制器类型
+        private static Dictionary<string, Type> CommandMap = new Dictionary<string, Type>();
 
         //1.1 注册Model
         public static void RegisterModel(Model model)
@@ -42,7 +42,7 @@ namespace CarrotFantasyMain.Scripts.FrameWork.MVC
         public static Model GetModel<T>()
             where T : Model
         {
-            foreach (Model model in Models.Values)
+            foreach (var model in Models.Values)
             {
                 if (model is T)
                 {
@@ -57,7 +57,7 @@ namespace CarrotFantasyMain.Scripts.FrameWork.MVC
         public static View GetView<T>()
             where T : View
         {
-            foreach (View view in Views.Values)
+            foreach (var view in Views.Values)
             {
                 if (view is T)
                 {
@@ -74,15 +74,18 @@ namespace CarrotFantasyMain.Scripts.FrameWork.MVC
             //控制器响应事件
             if (CommandMap.ContainsKey(eventName))
             {
-                Type t = CommandMap[eventName];
-                Controller c = Activator.CreateInstance(t) as Controller;
+                //确认命令类型
+                var t = CommandMap[eventName];
+
+                //创建执行器
+                var c = Activator.CreateInstance(t) as Controller;
 
                 //控制器执行
                 c.Execute(data);
             }
 
-            //视图    响应事件
-            foreach (View view in Views.Values)
+            //视图响应事件
+            foreach (var view in Views.Values)
             {
                 if (view.AttentionEvent.Contains(eventName))
                 {

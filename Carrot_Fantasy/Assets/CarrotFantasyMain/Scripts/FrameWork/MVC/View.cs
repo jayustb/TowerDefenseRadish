@@ -19,13 +19,13 @@ namespace CarrotFantasyMain.Scripts.FrameWork.MVC
         protected Model GetModel<T>()
             where T : Model
         {
-            return MVC.GetModel<T>();
+            return Mvc.GetModel<T>();
         }
 
         //发送消息
         protected void SendEvent(string eventName, object data = null)
         {
-            MVC.SendEvent(eventName, data);
+            Mvc.SendEvent(eventName, data);
         }
     }
 }

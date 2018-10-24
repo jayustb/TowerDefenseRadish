@@ -11,32 +11,32 @@ namespace CarrotFantasyMain.Scripts.FrameWork.MVC
         protected Model GetModel<T>()
             where T : Model
         {
-            return MVC.GetModel<T>();
+            return Mvc.GetModel<T>();
         }
 
         //2. 获取视图
         public static View GetView<T>()
             where T : View
         {
-            return MVC.GetView<T>();
+            return Mvc.GetView<T>();
         }
 
         //3. 注册模型    from MVC
         protected void RegisterModel(Model model)
         {
-            MVC.RegisterModel(model);
+            Mvc.RegisterModel(model);
         }
 
         //4. 注册视图    from MVC
         protected void RegisterView(View view)
         {
-            MVC.RegisterView(view);
+            Mvc.RegisterView(view);
         }
 
         //5. 注册控制器 from MVC
         protected void RegisterController(string eventName, Type controllerType)
         {
-            MVC.RegisterControllerl(eventName, controllerType);
+            Mvc.RegisterControllerl(eventName, controllerType);
         }
 
         //6. 处理系统消息

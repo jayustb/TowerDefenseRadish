@@ -1,18 +1,15 @@
 ﻿<?xml version="1.0" encoding="utf-8"?>
 <Level>
-<Name>第二关：敌人来袭</Name>
+<Name>第一关：敌人来袭</Name>
 <Background>bg2.png</Background>
 <Road>road2.png</Road>
 <InitScore>10</InitScore>
 <Holder>
-<Point X="1" Y="0"/>
-<Point X="2" Y="0"/>
 <Point X="3" Y="0"/>
 <Point X="4" Y="0"/>
 <Point X="5" Y="0"/>
 <Point X="6" Y="0"/>
 <Point X="7" Y="0"/>
-<Point X="8" Y="0"/>
 <Point X="1" Y="1"/>
 <Point X="8" Y="1"/>
 <Point X="1" Y="2"/>

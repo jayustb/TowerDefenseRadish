@@ -9,15 +9,15 @@ namespace CarrotFantasyMain.Scripts.FrameWork.MVC
         where T : MonoBehaviour
     {
         //注册控制器
-        protected void RegisterController(string eventName, Type controllerType)
+        protected void  RegisterController(string eventName, Type controllerType)
         {
-            MVC.RegisterControllerl(eventName, controllerType);
+            Mvc.RegisterControllerl(eventName, controllerType);
         }
 
         //执行控制器
         protected void SendEvent(string eventName, object args = null)
         {
-            MVC.SendEvent(eventName);
+            Mvc.SendEvent(eventName);
         }
     }
 }
